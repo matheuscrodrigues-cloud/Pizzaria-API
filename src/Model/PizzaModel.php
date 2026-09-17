@@ -21,30 +21,29 @@ class PizzaModel {
         $stmt = $this->db->prepare("SELECT * FROM pizzas WHERE id = :id");
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch();
+        $resultado = $stmt->fetch();
+        return $resultado ?: null;
     }
 
     public function criar(array $dados): int {
-        $sql = "INSERT INTO pizzas (nome, ingredientes, preco, tamanho) VALUES (:nome, :ingredientes, :preco, :tamanho)";
+        $sql = "INSERT INTO pizzas (nome, ingredientes, preco) VALUES (:nome, :ingredientes, :preco)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             ':nome' => $dados['nome'],
             ':ingredientes' => $dados['ingredientes'],
-            ':preco' => $dados['preco'],
-            ':tamanho' => $dados['tamanho'] ?? 'Média'
+            ':preco' => $dados['preco']
         ]);
         return (int) $this->db->lastInsertId();
     }
 
     public function atualizar(int $id, array $dados): bool {
-        $sql = "UPDATE pizzas SET nome = :nome, ingredientes = :ingredientes, preco = :preco, tamanho = :tamanho WHERE id = :id";
+        $sql = "UPDATE pizzas SET nome = :nome, ingredientes = :ingredientes, preco = :preco WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             ':id' => $id,
             ':nome' => $dados['nome'],
             ':ingredientes' => $dados['ingredientes'],
-            ':preco' => $dados['preco'],
-            ':tamanho' => $dados['tamanho'] ?? 'Média'
+            ':preco' => $dados['preco']
         ]);
     }
 

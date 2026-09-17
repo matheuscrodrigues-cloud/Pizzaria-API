@@ -14,13 +14,18 @@ require_once __DIR__ . '/vendor/autoload.php';
 use App\Controller\PizzaController;
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uriParts = explode('/', trim($uri, '/'));
+$uriParts = array_values(array_filter(explode('/', trim($uri, '/'))));
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Rota base para pizzas
-if (isset($uriParts[0]) && $uriParts[0] === 'pizzas') {
+
+$key = array_search('pizzas', $uriParts);
+
+if ($key !== false) {
     $controller = new PizzaController();
-    $id = isset($uriParts[1]) && is_numeric($uriParts[1]) ? (int) $uriParts[1] : null;
+    
+ 
+    $idIndex = $key + 1;
+    $id = isset($uriParts[$idIndex]) && is_numeric($uriParts[$idIndex]) ? (int) $uriParts[$idIndex] : null;
 
     switch ($method) {
         case 'GET':
@@ -40,7 +45,7 @@ if (isset($uriParts[0]) && $uriParts[0] === 'pizzas') {
                 $controller->atualizar($id);
             } else {
                 http_response_code(400);
-                echo json_encode(["sucesso" => false, "mensagem" => "ID é obrigatório para atualização."]);
+                echo json_encode(["sucesso" => false, "mensagem" => "ID é obrigatório para atualização."], JSON_UNESCAPED_UNICODE);
             }
             break;
 
@@ -49,16 +54,17 @@ if (isset($uriParts[0]) && $uriParts[0] === 'pizzas') {
                 $controller->deletar($id);
             } else {
                 http_response_code(400);
-                echo json_encode(["sucesso" => false, "mensagem" => "ID é obrigatório para exclusão."]);
+                echo json_encode(["sucesso" => false, "mensagem" => "ID é obrigatório para exclusão."], JSON_UNESCAPED_UNICODE);
             }
             break;
 
         default:
             http_response_code(405);
-            echo json_encode(["sucesso" => false, "mensagem" => "Método não permitido."]);
+            echo json_encode(["sucesso" => false, "mensagem" => "Método não permitido."], JSON_UNESCAPED_UNICODE);
             break;
     }
 } else {
     http_response_code(404);
-    echo json_encode(["sucesso" => false, "mensagem" => "Rota não encontrada."]);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(["sucesso" => false, "mensagem" => "Rota não encontrada."], JSON_UNESCAPED_UNICODE);
 }

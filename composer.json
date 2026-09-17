@@ -1,11 +1,13 @@
 {
     "name": "aluno/pizzaria-api",
-    "description": "API REST para Pizzaria",
+    "description": "API REST para Catálogo de Pizzaria",
     "autoload": {
         "psr-4": {
             "App\\": "src/",
             "Config\\": "config/"
         }
     },
-    "require": {}
+    "require": {
+        "zircote/swagger-php": "^6.9"
+    }
 }

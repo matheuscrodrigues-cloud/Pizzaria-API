@@ -1,0 +1,128 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Rest de Pizzas",
+        "description": "Documentação do catálogo de pizzas da API REST",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/pizzaria_api",
+            "description": "Servidor de desenvolvimento local da API"
+        }
+    ],
+    "paths": {
+        "/pizzas": {
+            "get": {
+                "tags": [
+                    "Pizzas"
+                ],
+                "summary": "Lista todas as pizzas registradas",
+                "operationId": "cec6f55f0209e5f7a703bd5873b353ab",
+                "responses": {
+                    "200": {
+                        "description": "Requisição concluída com sucesso"
+                    },
+                    "500": {
+                        "description": "Erro ao listar pizzas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pizzas"
+                ],
+                "summary": "Registro de nova pizza",
+                "operationId": "7de77be35aa498493b3b12661255cc81",
+                "responses": {
+                    "201": {
+                        "description": "Pizza cadastrada com sucesso"
+                    },
+                    "400": {
+                        "description": "Dados inválidos enviados"
+                    }
+                }
+            }
+        },
+        "/pizzas/{id}": {
+            "get": {
+                "tags": [
+                    "Pizzas"
+                ],
+                "summary": "Obtendo informações de uma pizza",
+                "operationId": "bfee792538a3b48d04c339035203c046",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID único da pizza",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pizza encontrada com sucesso"
+                    },
+                    "404": {
+                        "description": "Pizza não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Pizzas"
+                ],
+                "summary": "Atualizar pizza",
+                "operationId": "f47544f8b48be73ce6ead861ec3bd0da",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID único da pizza",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pizza atualizada com sucesso"
+                    },
+                    "400": {
+                        "description": "Dados inválidos"
+                    },
+                    "404": {
+                        "description": "Pizza não encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pizzas"
+                ],
+                "summary": "Exclusão de pizza",
+                "operationId": "2cf380ec44f9b5fb8f50bf4e36e57c32",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID único da pizza",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pizza removida com sucesso"
+                    },
+                    "404": {
+                        "description": "Pizza não encontrada"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Pizzas",
+            "description": "Endpoints para gerenciamento do catálogo de pizzas"
+        }
+    ]
+}
